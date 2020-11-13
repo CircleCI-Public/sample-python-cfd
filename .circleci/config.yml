@@ -1,0 +1,31 @@
+version: 2.1
+
+orbs:
+  # The node orb contains a set of prepackaged circleci configuration you can use
+  # Orbs commands and jobs help you with common scripting around a language/tool
+  # so you dont have to copy and paste it everywhere.
+  python: circleci/python@1.2
+
+workflows:
+  sample:
+    jobs:
+      - build-and-test
+
+jobs:
+  build-and-test:
+    docker:
+      # Be sure to change this to major.minor version of python you need to support.
+      - image: cimg/python:3.9
+    # Checkout the code as the first step.
+    # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
+    # Here we're making sure we just pip by default
+    # Then run your tests!
+    # CircleCI will report the results back to your VCS provider.
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: pytest
+

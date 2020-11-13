@@ -1,0 +1,252 @@
+openapi: 3.0.0
+info:
+  license:
+    name: MIT
+  title: ZoomFoodToo
+  version: 1.0.0
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/dsayling8/ZoomFoodToo/1.0.0
+paths:
+  /cart:
+    get:
+      operationId: list_cart
+      parameters:
+      - description: How many items to return at one time (max 100)
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: A paged array of cart items
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              explode: false
+              schema:
+                type: string
+              style: simple
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: List all cart items
+      tags:
+      - cart
+      x-openapi-router-controller: openapi_server.controllers.cart_controller
+    post:
+      description: Creates a new item in the cart. Duplicates are allowed
+      operationId: add_cart_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+        description: Item to add to the cart
+        required: true
+      responses:
+        "201":
+          description: Null response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Add a menu item a cart
+      tags:
+      - cart
+      x-openapi-router-controller: openapi_server.controllers.cart_controller
+  /cart/{itemId}:
+    delete:
+      description: |
+        The item must be in the cart. If multiple of same item, call this twice
+      operationId: delete_cart_item
+      parameters:
+      - description: The menu item to delete from cart
+        explode: false
+        in: path
+        name: itemId
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "201":
+          description: Null response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Remove item from cart
+      tags:
+      - cart
+      x-openapi-router-controller: openapi_server.controllers.cart_controller
+  /menu:
+    get:
+      operationId: list_menu
+      parameters:
+      - description: How many items to return at one time (max 100)
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+          description: A paged array of menu items
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              explode: false
+              schema:
+                type: string
+              style: simple
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: List all menu items
+      tags:
+      - menu
+      x-openapi-router-controller: openapi_server.controllers.menu_controller
+    post:
+      description: Creates a new item in the menu. Duplicates are allowed
+      operationId: add_menu_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+        description: Item to add to the store
+        required: true
+      responses:
+        "201":
+          description: Null response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Create a menu item
+      tags:
+      - menu
+      x-openapi-router-controller: openapi_server.controllers.menu_controller
+  /menu/{itemId}:
+    get:
+      operationId: show_menu_item_by_id
+      parameters:
+      - description: The id of the menu item to retrieve
+        explode: false
+        in: path
+        name: itemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+          description: Expected response to a valid request
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Info for a specific menu item
+      tags:
+      - menu
+      x-openapi-router-controller: openapi_server.controllers.menu_controller
+components:
+  schemas:
+    MenuItem:
+      example:
+        price: 6.027456183070403
+        imageUrl: imageUrl
+        name: name
+        description: description
+        id: 0
+      properties:
+        id:
+          format: int32
+          type: integer
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        imageUrl:
+          description: URL to an image of the menu item
+          type: string
+      required:
+      - description
+      - id
+      - imageUrl
+      - name
+      - price
+      type: object
+    Menu:
+      items:
+        $ref: '#/components/schemas/MenuItem'
+      type: array
+    Cart:
+      example:
+        menuItems:
+        - price: 6.027456183070403
+          imageUrl: imageUrl
+          name: name
+          description: description
+          id: 0
+        - price: 6.027456183070403
+          imageUrl: imageUrl
+          name: name
+          description: description
+          id: 0
+      properties:
+        menuItems:
+          items:
+            $ref: '#/components/schemas/MenuItem'
+          type: array
+      required:
+      - menuItems
+      type: object
+    Error:
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      required:
+      - code
+      - message
+      type: object
