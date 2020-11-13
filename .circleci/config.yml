@@ -18,17 +18,17 @@ jobs:
       - image: cimg/python:3.9
     # Checkout the code as the first step.
     # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
-    # Here we're making sure we just pip by default
+    # Here we're making sure we use just use the global env pip. By default it uses the project root's requirements.txt.
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      - python/install-packages:
-          pkg-manager: pip
-          pip-dependency-file: test-requirements.txt
+          # app-dir: ~/project/package-directory/  If you're requirements.txt isn't in the root directory.
+          pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
           name: Run tests
+          # This assumes pytest is installed via the install-package step above
           command: pytest
 
