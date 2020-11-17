@@ -27,7 +27,7 @@ class TestCartController(BaseTestCase):
   "description" : "description",
   "id" : 0
 }
-        headers = { 
+        headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
@@ -37,7 +37,7 @@ class TestCartController(BaseTestCase):
             headers=headers,
             data=json.dumps(menu_item),
             content_type='application/json')
-        self.assert200(response,
+        self.assertStatus(response, 204,
                        'Response body is : ' + response.data.decode('utf-8'))
 
     def test_delete_cart_item(self):
@@ -45,7 +45,7 @@ class TestCartController(BaseTestCase):
 
         Remove item from cart
         """
-        headers = { 
+        headers = {
             'Accept': 'application/json',
         }
         response = self.client.open(
@@ -61,7 +61,7 @@ class TestCartController(BaseTestCase):
         List all cart items
         """
         query_string = [('limit', 56)]
-        headers = { 
+        headers = {
             'Accept': 'application/json',
         }
         response = self.client.open(

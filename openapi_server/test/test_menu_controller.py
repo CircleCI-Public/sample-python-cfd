@@ -24,9 +24,9 @@ class TestMenuController(BaseTestCase):
   "imageUrl" : "imageUrl",
   "name" : "name",
   "description" : "description",
-  "id" : 0
+  "id" : 3
 }
-        headers = { 
+        headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         }
@@ -36,7 +36,7 @@ class TestMenuController(BaseTestCase):
             headers=headers,
             data=json.dumps(menu_item),
             content_type='application/json')
-        self.assert200(response,
+        self.assertStatus(response, 204,
                        'Response body is : ' + response.data.decode('utf-8'))
 
     def test_list_menu(self):
@@ -45,7 +45,7 @@ class TestMenuController(BaseTestCase):
         List all menu items
         """
         query_string = [('limit', 56)]
-        headers = { 
+        headers = {
             'Accept': 'application/json',
         }
         response = self.client.open(
@@ -61,11 +61,11 @@ class TestMenuController(BaseTestCase):
 
         Info for a specific menu item
         """
-        headers = { 
+        headers = {
             'Accept': 'application/json',
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/menu/{item_id}'.format(item_id='item_id_example'),
+            '/dsayling8/ZoomFoodToo/1.0.0/menu/{item_id}'.format(item_id=0),
             method='GET',
             headers=headers)
         self.assert200(response,

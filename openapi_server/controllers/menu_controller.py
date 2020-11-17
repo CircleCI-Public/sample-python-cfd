@@ -5,8 +5,11 @@ from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
 from openapi_server import util
 
+# TEMPORARY IN MEMORY "DATABASE"
+MENU = {0: MenuItem(id=0,description="Sample",name="Sample",price=.50,image_url="https://en.wikipedia.org/wiki/Costco#/media/File:Kirkland_Signature_Drinking_Water_1.5L_20050508.jpg"),
+}
 
-def add_menu_item(menu_item):  # noqa: E501
+def add_menu_item():  # noqa: E501
     """Create a menu item
 
     Creates a new item in the menu. Duplicates are allowed # noqa: E501
@@ -18,7 +21,10 @@ def add_menu_item(menu_item):  # noqa: E501
     """
     if connexion.request.is_json:
         menu_item = MenuItem.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    if MENU.get(int(menu_item.id)):
+        return Error(400)
+    else:
+        MENU.update({int(menu_item.id): menu_item})
 
 
 def list_menu(limit=None):  # noqa: E501
@@ -31,8 +37,8 @@ def list_menu(limit=None):  # noqa: E501
 
     :rtype: List[MenuItem]
     """
-    return 'do some magic!'
-
+    values = list(MENU.values())[:limit] if limit else list(MENU.values())[:100]
+    return values
 
 def show_menu_item_by_id(item_id):  # noqa: E501
     """Info for a specific menu item
@@ -44,4 +50,4 @@ def show_menu_item_by_id(item_id):  # noqa: E501
 
     :rtype: MenuItem
     """
-    return 'do some magic!'
+    return MENU.get(int(item_id))
