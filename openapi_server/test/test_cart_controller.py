@@ -22,7 +22,7 @@ class TestCartController(BaseTestCase):
         """
         menu_item = {
   "price" : 6.027456183070403,
-  "imageUrl" : "imageUrl",
+  "imageId" : 5,
   "name" : "name",
   "description" : "description",
   "id" : 0

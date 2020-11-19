@@ -256,7 +256,7 @@ components:
         - name
         - description
         - price
-        - imageUrl
+        - imageId
       properties:
         id:
           type: integer
@@ -267,8 +267,9 @@ components:
           type: string
         price:
           type: number
-        imageUrl:
-          type: string
+        imageId:
+          type: integer
+          format: int32
           description: |
             URL to an image of the menu item. 
             This should be the image from the /image endpoint

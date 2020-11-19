@@ -21,7 +21,7 @@ class TestMenuController(BaseTestCase):
         """
         menu_item = {
   "price" : 6.02,
-  "imageUrl" : "imageUrl",
+  "imageId" : 5,
   "name" : "name",
   "description" : "description",
   "id" : 13

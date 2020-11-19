@@ -15,7 +15,7 @@ class MenuItem(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id=None, description=None, name=None, price=None, image_url=None):  # noqa: E501
+    def __init__(self, id=None, description=None, name=None, price=None, image_id=None):  # noqa: E501
         """MenuItem - a model defined in OpenAPI
 
         :param id: The id of this MenuItem.  # noqa: E501
@@ -26,15 +26,15 @@ class MenuItem(Model):
         :type name: str
         :param price: The price of this MenuItem.  # noqa: E501
         :type price: float
-        :param image_url: The image_url of this MenuItem.  # noqa: E501
-        :type image_url: str
+        :param image_id: The image_id of this MenuItem.  # noqa: E501
+        :type image_id: int
         """
         self.openapi_types = {
             'id': int,
             'description': str,
             'name': str,
             'price': float,
-            'image_url': str
+            'image_id': int
         }
 
         self.attribute_map = {
@@ -42,14 +42,14 @@ class MenuItem(Model):
             'description': 'description',
             'name': 'name',
             'price': 'price',
-            'image_url': 'imageUrl'
+            'image_id': 'imageId'
         }
 
         self._id = id
         self._description = description
         self._name = name
         self._price = price
-        self._image_url = image_url
+        self._image_id = image_id
 
     @classmethod
     def from_dict(cls, dikt) -> 'MenuItem':
@@ -155,26 +155,26 @@ class MenuItem(Model):
         self._price = price
 
     @property
-    def image_url(self):
-        """Gets the image_url of this MenuItem.
+    def image_id(self):
+        """Gets the image_id of this MenuItem.
 
         URL to an image of the menu item.  This should be the image from the /image endpoint   # noqa: E501
 
-        :return: The image_url of this MenuItem.
-        :rtype: str
+        :return: The image_id of this MenuItem.
+        :rtype: int
         """
-        return self._image_url
+        return self._image_id
 
-    @image_url.setter
-    def image_url(self, image_url):
-        """Sets the image_url of this MenuItem.
+    @image_id.setter
+    def image_id(self, image_id):
+        """Sets the image_id of this MenuItem.
 
         URL to an image of the menu item.  This should be the image from the /image endpoint   # noqa: E501
 
-        :param image_url: The image_url of this MenuItem.
-        :type image_url: str
+        :param image_id: The image_id of this MenuItem.
+        :type image_id: int
         """
-        if image_url is None:
-            raise ValueError("Invalid value for `image_url`, must not be `None`")  # noqa: E501
+        if image_id is None:
+            raise ValueError("Invalid value for `image_id`, must not be `None`")  # noqa: E501
 
-        self._image_url = image_url
+        self._image_id = image_id

@@ -1,6 +1,4 @@
 .dockerignore
-.gitignore
-.travis.yml
 Dockerfile
 git_push.sh
 openapi_server/__init__.py

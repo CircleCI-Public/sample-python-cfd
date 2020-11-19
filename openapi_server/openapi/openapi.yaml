@@ -276,8 +276,8 @@ components:
   schemas:
     MenuItem:
       example:
+        imageId: 1
         price: 6.027456183070403
-        imageUrl: imageUrl
         name: name
         description: description
         id: 0
@@ -291,14 +291,15 @@ components:
           type: string
         price:
           type: number
-        imageUrl:
+        imageId:
           description: "URL to an image of the menu item. \nThis should be the image\
             \ from the /image endpoint\n"
-          type: string
+          format: int32
+          type: integer
       required:
       - description
       - id
-      - imageUrl
+      - imageId
       - name
       - price
       type: object
