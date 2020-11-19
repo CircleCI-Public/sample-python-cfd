@@ -10,32 +10,6 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 ## Requirements
 Python 3.5.2+
 
-## Usage
-To run the server, please execute the following from the root directory:
-
-```
-pip3 install -r requirements.txt
-python3 -m openapi_server
-```
-
-and open your browser to here:
-
-```
-http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/ui/
-```
-
-Your OpenAPI definition lives here:
-
-```
-http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/openapi.json
-```
-
-To launch the integration tests, use tox:
-```
-sudo pip install tox
-tox
-```
-
 ## Running with Docker
 
 To run the server on a Docker container, please execute the following from the root directory:
@@ -48,7 +22,35 @@ docker build -t openapi_server .
 docker run -p 8080:8080 openapi_server
 ```
 
-Simply navigate to your browser as descrbed above.
+## Usage
+If not using docker, to run the server, please execute the following from the root directory:
+
+```
+pip3 install -r requirements.txt
+python3 -m openapi_server
+```
+
+### Access Swagger UI
+
+You can use this UI to test API calls to the server.
+
+```
+http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/ui/
+```
+
+### See openapi spec in JSON
+
+```
+http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/openapi.json
+```
+
+### Tests
+To launch the integration tests, use tox:
+
+```
+sudo pip install tox
+tox
+```
 
 ## Swagger Editor
 
@@ -58,4 +60,20 @@ When you're done editing the file though, you'll have to download it from the br
 
 ```bash
 docker run -p 8081:8080 -v $(pwd):/tmp -e SWAGGER_FILE=/tmp/zoomfood-openapi.yaml swaggerapi/swagger-editor
+```
+ ## Spec Generator
+
+ The root specification `zoomfood-openapi.yaml` can be used to generate other code bases. Soon this spec file will have a source of truth where the generation should be done from - until then, you can generate other code bases using the OpenAPI spec prebuilt image.
+
+ ```
+ docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli list
+ ```
+
+ Shows you want you can generate and then feed into
+
+ ```
+ docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
+    -i /local/zoomfood-openapi.yaml \
+    -g lang-to-generate \
+    -o /local/dest-dir-for-generated-code
 ```
