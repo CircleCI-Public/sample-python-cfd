@@ -1,0 +1,293 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: ZoomFoodToo
+  license:
+    name: MIT
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/dsayling8/ZoomFoodToo/1.0.0
+  - description: Local
+    url: http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0
+paths:
+  /cart:
+    get:
+      summary: List all cart items
+      operationId: listCart
+      tags:
+        - cart
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of cart items
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Cart"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Add a menu item a cart
+      description: Creates a new item in the cart. Duplicates are allowed
+      requestBody:
+        description: Item to add to the cart
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      operationId: addCartItem
+      tags:
+        - cart
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cart/{itemId}:
+    delete:
+      tags:
+        - cart
+      summary: Remove item from cart
+      description: |
+        The item must be in the cart. If multiple of same item, call this twice
+      operationId: deleteCartItem
+      parameters:
+      - name: itemId
+        in: path
+        description: The menu item to delete from cart
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /menu:
+    get:
+      summary: List all menu items
+      operationId: listMenu
+      tags:
+        - menu
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of menu items
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Menu"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      summary: Create a menu item
+      description: Creates a new item in the menu. Duplicates are allowed
+      requestBody:
+        description: Item to add to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuItem'
+      operationId: addMenuItem
+      tags:
+        - menu
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /menu/{itemId}:
+    get:
+      summary: Info for a specific menu item
+      operationId: showMenuItemById
+      tags:
+        - menu
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The id of the menu item to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /image:
+    post:
+      summary: Add an image to the restaraunt
+      description: Creates an image. Duplicates are allowed. Returns the image id
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                  format: binary
+      operationId: addImage
+      tags:
+        - image
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  imageId:
+                    type: integer
+                example:
+                    imageId: 1
+  /image/{imageId}:
+    get:
+      tags:
+        - image
+      summary: Get image
+      description: |
+        Returns the image as image/png
+      operationId: getImage
+      parameters:
+      - name: imageId
+        in: path
+        description: The imageId of the image to retrieve 
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - image
+      summary: Remove image
+      description: |
+        The imageId must exist
+      operationId: deleteImage
+      parameters:
+      - name: imageId
+        in: path
+        description: The imageId to delete
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    MenuItem:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - price
+        - imageUrl
+      properties:
+        id:
+          type: integer
+          format: int32
+        description:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        imageUrl:
+          type: string
+          description: |
+            URL to an image of the menu item. 
+            This should be the image from the /image endpoint
+    Menu:
+      type: array
+      items:
+        $ref: "#/components/schemas/MenuItem"
+    Cart:
+      type: array
+      items:
+        $ref: "#/components/schemas/MenuItem"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

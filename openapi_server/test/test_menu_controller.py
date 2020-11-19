@@ -20,11 +20,11 @@ class TestMenuController(BaseTestCase):
         Create a menu item
         """
         menu_item = {
-  "price" : 6.027456183070403,
+  "price" : 6.02,
   "imageUrl" : "imageUrl",
   "name" : "name",
   "description" : "description",
-  "id" : 3
+  "id" : 13
 }
         headers = {
             'Accept': 'application/json',

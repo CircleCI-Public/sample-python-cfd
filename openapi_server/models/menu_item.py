@@ -158,7 +158,7 @@ class MenuItem(Model):
     def image_url(self):
         """Gets the image_url of this MenuItem.
 
-        URL to an image of the menu item  # noqa: E501
+        URL to an image of the menu item.  This should be the image from the /image endpoint   # noqa: E501
 
         :return: The image_url of this MenuItem.
         :rtype: str
@@ -169,7 +169,7 @@ class MenuItem(Model):
     def image_url(self, image_url):
         """Sets the image_url of this MenuItem.
 
-        URL to an image of the menu item  # noqa: E501
+        URL to an image of the menu item.  This should be the image from the /image endpoint   # noqa: E501
 
         :param image_url: The image_url of this MenuItem.
         :type image_url: str

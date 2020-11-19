@@ -21,3 +21,8 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+README.md
+**requirements.txt
+openapi_server/__main__.py
+.gitignore
+.travis.yml

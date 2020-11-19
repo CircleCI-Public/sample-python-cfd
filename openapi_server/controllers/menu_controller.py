@@ -4,10 +4,8 @@ import six
 from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
 from openapi_server import util
+from openapi_server.database import MENU
 
-# TEMPORARY IN MEMORY "DATABASE"
-MENU = {0: MenuItem(id=0,description="Sample water bottle",name="Water",price=.50,image_url="https://en.wikipedia.org/wiki/Costco#/media/File:Kirkland_Signature_Drinking_Water_1.5L_20050508.jpg"),
-}
 
 def add_menu_item():  # noqa: E501
     """Create a menu item

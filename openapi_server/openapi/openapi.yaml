@@ -7,6 +7,8 @@ info:
 servers:
 - description: SwaggerHub API Auto Mocking
   url: https://virtserver.swaggerhub.com/dsayling8/ZoomFoodToo/1.0.0
+- description: Local
+  url: http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0
 paths:
   /cart:
     get:
@@ -96,6 +98,85 @@ paths:
       tags:
       - cart
       x-openapi-router-controller: openapi_server.controllers.cart_controller
+  /image:
+    post:
+      description: Creates an image. Duplicates are allowed. Returns the image id
+      operationId: add_image
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                fileName:
+                  format: binary
+                  type: string
+              type: object
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: OK
+      summary: Add an image to the restaraunt
+      tags:
+      - image
+      x-openapi-router-controller: openapi_server.controllers.image_controller
+  /image/{imageId}:
+    delete:
+      description: |
+        The imageId must exist
+      operationId: delete_image
+      parameters:
+      - description: The imageId to delete
+        explode: false
+        in: path
+        name: imageId
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "201":
+          description: Null response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Remove image
+      tags:
+      - image
+      x-openapi-router-controller: openapi_server.controllers.image_controller
+    get:
+      description: |
+        Returns the image as image/png
+      operationId: get_image
+      parameters:
+      - description: The imageId of the image to retrieve
+        explode: false
+        in: path
+        name: imageId
+        required: true
+        schema:
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            image/png:
+              schema:
+                format: binary
+                type: string
+          description: image
+      summary: Get image
+      tags:
+      - image
+      x-openapi-router-controller: openapi_server.controllers.image_controller
   /menu:
     get:
       operationId: list_menu
@@ -186,6 +267,12 @@ paths:
       - menu
       x-openapi-router-controller: openapi_server.controllers.menu_controller
 components:
+  requestBodies:
+    inline_object:
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/inline_object'
   schemas:
     MenuItem:
       example:
@@ -205,7 +292,8 @@ components:
         price:
           type: number
         imageUrl:
-          description: URL to an image of the menu item
+          description: "URL to an image of the menu item. \nThis should be the image\
+            \ from the /image endpoint\n"
           type: string
       required:
       - description
@@ -219,26 +307,9 @@ components:
         $ref: '#/components/schemas/MenuItem'
       type: array
     Cart:
-      example:
-        menuItems:
-        - price: 6.027456183070403
-          imageUrl: imageUrl
-          name: name
-          description: description
-          id: 0
-        - price: 6.027456183070403
-          imageUrl: imageUrl
-          name: name
-          description: description
-          id: 0
-      properties:
-        menuItems:
-          items:
-            $ref: '#/components/schemas/MenuItem'
-          type: array
-      required:
-      - menuItems
-      type: object
+      items:
+        $ref: '#/components/schemas/MenuItem'
+      type: array
     Error:
       properties:
         code:
@@ -249,4 +320,17 @@ components:
       required:
       - code
       - message
+      type: object
+    inline_object:
+      properties:
+        fileName:
+          format: binary
+          type: string
+      type: object
+    inline_response_200:
+      example:
+        imageId: 1
+      properties:
+        imageId:
+          type: integer
       type: object
