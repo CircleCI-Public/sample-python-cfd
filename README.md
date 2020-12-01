@@ -6,9 +6,9 @@ TODO: links in this document will need updating after migration to another githu
 
 ## Description
 
-The sample app here is designed to demonstrate a simple python CircleCI workflows.
+The sample app here is designed to demonstrate a simple python CircleCI workflow.
 
-In this sample pipeline, we're simply installing dev python packages, with the [CircleCI python orb](https://circleci.com/developer/orbs/orb/circleci/python), and then running tests with pytest.
+In this sample workflow, we're simply installing our required python packages, with the [CircleCI python orb](https://circleci.com/developer/orbs/orb/circleci/python), and then running tests with `pytest`, a common python testing framework.
 
 ## Getting Started
 
