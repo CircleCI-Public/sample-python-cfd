@@ -35,13 +35,13 @@ python3 -m openapi_server
 You can use this UI to test API calls to the server.
 
 ```
-http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/ui/
+http://localhost:8080/ZoomFoodToo/1.0.0/ui/
 ```
 
 ### See openapi spec in JSON
 
 ```
-http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0/openapi.json
+http://localhost:8080/ZoomFoodToo/1.0.0/openapi.json
 ```
 
 ### Tests

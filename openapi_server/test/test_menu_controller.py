@@ -31,7 +31,7 @@ class TestMenuController(BaseTestCase):
             'Content-Type': 'application/json',
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/menu',
+            '/ZoomFoodToo/1.0.0/menu',
             method='POST',
             headers=headers,
             data=json.dumps(menu_item),
@@ -49,7 +49,7 @@ class TestMenuController(BaseTestCase):
             'Accept': 'application/json',
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/menu',
+            '/ZoomFoodToo/1.0.0/menu',
             method='GET',
             headers=headers,
             query_string=query_string)
@@ -65,7 +65,7 @@ class TestMenuController(BaseTestCase):
             'Accept': 'application/json',
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/menu/{item_id}'.format(item_id=0),
+            '/ZoomFoodToo/1.0.0/menu/{item_id}'.format(item_id=0),
             method='GET',
             headers=headers)
         self.assert200(response,

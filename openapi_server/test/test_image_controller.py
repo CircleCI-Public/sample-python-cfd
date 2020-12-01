@@ -28,7 +28,7 @@ class TestImageController(BaseTestCase):
         }
         data = dict(fileName=(BytesIO(b'some file data'), 'file.png'))
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/image',
+            '/ZoomFoodToo/1.0.0/image',
             method='POST',
             headers=headers,
             data=data,
@@ -52,7 +52,7 @@ class TestImageController(BaseTestCase):
             'Accept': 'application/json',
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
+            '/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
             method='DELETE',
             headers=headers)
         self.assertStatus(response, 204,
@@ -70,7 +70,7 @@ class TestImageController(BaseTestCase):
 
         }
         response = self.client.open(
-            '/dsayling8/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
+            '/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
             method='GET',
             headers=headers)
         self.assert200(response)
