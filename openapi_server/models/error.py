@@ -23,21 +23,15 @@ class Error(Model):
         :param message: The message of this Error.  # noqa: E501
         :type message: str
         """
-        self.openapi_types = {
-            'code': int,
-            'message': str
-        }
+        self.openapi_types = {"code": int, "message": str}
 
-        self.attribute_map = {
-            'code': 'code',
-            'message': 'message'
-        }
+        self.attribute_map = {"code": "code", "message": "message"}
 
         self._code = code
         self._message = message
 
     @classmethod
-    def from_dict(cls, dikt) -> 'Error':
+    def from_dict(cls, dikt) -> "Error":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -66,7 +60,9 @@ class Error(Model):
         :type code: int
         """
         if code is None:
-            raise ValueError("Invalid value for `code`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `code`, must not be `None`"
+            )  # noqa: E501
 
         self._code = code
 
@@ -89,6 +85,8 @@ class Error(Model):
         :type message: str
         """
         if message is None:
-            raise ValueError("Invalid value for `message`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `message`, must not be `None`"
+            )  # noqa: E501
 
         self._message = message

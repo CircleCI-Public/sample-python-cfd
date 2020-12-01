@@ -15,7 +15,9 @@ class MenuItem(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, id=None, description=None, name=None, price=None, image_id=None):  # noqa: E501
+    def __init__(
+        self, id=None, description=None, name=None, price=None, image_id=None
+    ):  # noqa: E501
         """MenuItem - a model defined in OpenAPI
 
         :param id: The id of this MenuItem.  # noqa: E501
@@ -30,19 +32,19 @@ class MenuItem(Model):
         :type image_id: int
         """
         self.openapi_types = {
-            'id': int,
-            'description': str,
-            'name': str,
-            'price': float,
-            'image_id': int
+            "id": int,
+            "description": str,
+            "name": str,
+            "price": float,
+            "image_id": int,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'description': 'description',
-            'name': 'name',
-            'price': 'price',
-            'image_id': 'imageId'
+            "id": "id",
+            "description": "description",
+            "name": "name",
+            "price": "price",
+            "image_id": "imageId",
         }
 
         self._id = id
@@ -52,7 +54,7 @@ class MenuItem(Model):
         self._image_id = image_id
 
     @classmethod
-    def from_dict(cls, dikt) -> 'MenuItem':
+    def from_dict(cls, dikt) -> "MenuItem":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -104,7 +106,9 @@ class MenuItem(Model):
         :type description: str
         """
         if description is None:
-            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `description`, must not be `None`"
+            )  # noqa: E501
 
         self._description = description
 
@@ -127,7 +131,9 @@ class MenuItem(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -150,7 +156,9 @@ class MenuItem(Model):
         :type price: float
         """
         if price is None:
-            raise ValueError("Invalid value for `price`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `price`, must not be `None`"
+            )  # noqa: E501
 
         self._price = price
 
@@ -175,6 +183,8 @@ class MenuItem(Model):
         :type image_id: int
         """
         if image_id is None:
-            raise ValueError("Invalid value for `image_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `image_id`, must not be `None`"
+            )  # noqa: E501
 
         self._image_id = image_id

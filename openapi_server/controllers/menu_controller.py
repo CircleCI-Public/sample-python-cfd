@@ -38,6 +38,7 @@ def list_menu(limit=None):  # noqa: E501
     values = list(MENU.values())[:limit] if limit else list(MENU.values())[:100]
     return values
 
+
 def show_menu_item_by_id(item_id):  # noqa: E501
     """Info for a specific menu item
 

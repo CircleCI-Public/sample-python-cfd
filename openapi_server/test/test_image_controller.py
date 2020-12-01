@@ -13,6 +13,7 @@ from openapi_server.test import BaseTestCase
 
 from openapi_server.controllers import image_controller
 
+
 class TestImageController(BaseTestCase):
     """ImageController integration test stubs"""
 
@@ -23,40 +24,44 @@ class TestImageController(BaseTestCase):
         Add an image to the restaraunt
         """
         headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
+            "Accept": "application/json",
+            "Content-Type": "multipart/form-data",
         }
-        data = dict(fileName=(BytesIO(b'some file data'), 'file.png'))
+        data = dict(fileName=(BytesIO(b"some file data"), "file.png"))
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/image',
-            method='POST',
+            "/ZoomFoodToo/1.0.0/image",
+            method="POST",
             headers=headers,
             data=data,
-            content_type='multipart/form-data')
+            content_type="multipart/form-data",
+        )
         try:
             e = None
-            self.assert200(response,
-                        'Response body is : ' + response.data.decode('utf-8'))
+            self.assert200(
+                response, "Response body is : " + response.data.decode("utf-8")
+            )
         except BaseException as e:
             raise
         finally:
-            image_controller.delete_image(response.get_json().get('imageId'))
+            image_controller.delete_image(response.get_json().get("imageId"))
 
-    @mock.patch('os.remove')
+    @mock.patch("os.remove")
     def test_delete_image(self, mock_remove):
         """Test case for delete_image
 
         Remove image
         """
         headers = {
-            'Accept': 'application/json',
+            "Accept": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
-            method='DELETE',
-            headers=headers)
-        self.assertStatus(response, 204,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            "/ZoomFoodToo/1.0.0/image/{image_id}".format(image_id=0),
+            method="DELETE",
+            headers=headers,
+        )
+        self.assertStatus(
+            response, 204, "Response body is : " + response.data.decode("utf-8")
+        )
         assert mock_remove.call_count == 1
 
     def test_get_image(self):
@@ -66,16 +71,15 @@ class TestImageController(BaseTestCase):
         """
         self.test_add_image()
         headers = {
-            'Accept': 'image/png application/json',
-
+            "Accept": "image/png application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/image/{image_id}'.format(image_id=0),
-            method='GET',
-            headers=headers)
+            "/ZoomFoodToo/1.0.0/image/{image_id}".format(image_id=0),
+            method="GET",
+            headers=headers,
+        )
         self.assert200(response)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

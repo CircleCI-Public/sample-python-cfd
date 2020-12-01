@@ -21,18 +21,14 @@ class InlineObject(Model):
         :param file_name: The file_name of this InlineObject.  # noqa: E501
         :type file_name: file
         """
-        self.openapi_types = {
-            'file_name': file
-        }
+        self.openapi_types = {"file_name": file}
 
-        self.attribute_map = {
-            'file_name': 'fileName'
-        }
+        self.attribute_map = {"file_name": "fileName"}
 
         self._file_name = file_name
 
     @classmethod
-    def from_dict(cls, dikt) -> 'InlineObject':
+    def from_dict(cls, dikt) -> "InlineObject":
         """Returns the dict as a model
 
         :param dikt: A dict.

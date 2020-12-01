@@ -43,6 +43,7 @@ def delete_cart_item(item_id):  # noqa: E501
     else:
         return Error(403)  # cart is already devoid of this item
 
+
 def list_cart(limit=None):  # noqa: E501
     """List all cart items
 
@@ -54,4 +55,3 @@ def list_cart(limit=None):  # noqa: E501
     :rtype: List[MenuItem]
     """
     return CART
-

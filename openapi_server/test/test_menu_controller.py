@@ -20,41 +20,43 @@ class TestMenuController(BaseTestCase):
         Create a menu item
         """
         menu_item = {
-  "price" : 6.02,
-  "imageId" : 5,
-  "name" : "name",
-  "description" : "description",
-  "id" : 13
-}
+            "price": 6.02,
+            "imageId": 5,
+            "name": "name",
+            "description": "description",
+            "id": 13,
+        }
         headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/menu',
-            method='POST',
+            "/ZoomFoodToo/1.0.0/menu",
+            method="POST",
             headers=headers,
             data=json.dumps(menu_item),
-            content_type='application/json')
-        self.assertStatus(response, 204,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assertStatus(
+            response, 204, "Response body is : " + response.data.decode("utf-8")
+        )
 
     def test_list_menu(self):
         """Test case for list_menu
 
         List all menu items
         """
-        query_string = [('limit', 56)]
+        query_string = [("limit", 56)]
         headers = {
-            'Accept': 'application/json',
+            "Accept": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/menu',
-            method='GET',
+            "/ZoomFoodToo/1.0.0/menu",
+            method="GET",
             headers=headers,
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            query_string=query_string,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_show_menu_item_by_id(self):
         """Test case for show_menu_item_by_id
@@ -62,15 +64,15 @@ class TestMenuController(BaseTestCase):
         Info for a specific menu item
         """
         headers = {
-            'Accept': 'application/json',
+            "Accept": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/menu/{item_id}'.format(item_id=0),
-            method='GET',
-            headers=headers)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            "/ZoomFoodToo/1.0.0/menu/{item_id}".format(item_id=0),
+            method="GET",
+            headers=headers,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

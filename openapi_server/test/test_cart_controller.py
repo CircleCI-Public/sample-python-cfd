@@ -21,24 +21,26 @@ class TestCartController(BaseTestCase):
         Add a menu item a cart
         """
         menu_item = {
-  "price" : 6.027456183070403,
-  "imageId" : 5,
-  "name" : "name",
-  "description" : "description",
-  "id" : 0
-}
+            "price": 6.027456183070403,
+            "imageId": 5,
+            "name": "name",
+            "description": "description",
+            "id": 0,
+        }
         headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/cart',
-            method='POST',
+            "/ZoomFoodToo/1.0.0/cart",
+            method="POST",
             headers=headers,
             data=json.dumps(menu_item),
-            content_type='application/json')
-        self.assertStatus(response, 204,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            content_type="application/json",
+        )
+        self.assertStatus(
+            response, 204, "Response body is : " + response.data.decode("utf-8")
+        )
 
     def test_delete_cart_item(self):
         """Test case for delete_cart_item
@@ -46,32 +48,32 @@ class TestCartController(BaseTestCase):
         Remove item from cart
         """
         headers = {
-            'Accept': 'application/json',
+            "Accept": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/cart/{item_id}'.format(item_id=56),
-            method='DELETE',
-            headers=headers)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            "/ZoomFoodToo/1.0.0/cart/{item_id}".format(item_id=56),
+            method="DELETE",
+            headers=headers,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_list_cart(self):
         """Test case for list_cart
 
         List all cart items
         """
-        query_string = [('limit', 56)]
+        query_string = [("limit", 56)]
         headers = {
-            'Accept': 'application/json',
+            "Accept": "application/json",
         }
         response = self.client.open(
-            '/ZoomFoodToo/1.0.0/cart',
-            method='GET',
+            "/ZoomFoodToo/1.0.0/cart",
+            method="GET",
             headers=headers,
-            query_string=query_string)
-        self.assert200(response,
-                       'Response body is : ' + response.data.decode('utf-8'))
+            query_string=query_string,
+        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

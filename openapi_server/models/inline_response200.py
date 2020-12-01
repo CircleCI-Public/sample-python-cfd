@@ -21,18 +21,14 @@ class InlineResponse200(Model):
         :param image_id: The image_id of this InlineResponse200.  # noqa: E501
         :type image_id: int
         """
-        self.openapi_types = {
-            'image_id': int
-        }
+        self.openapi_types = {"image_id": int}
 
-        self.attribute_map = {
-            'image_id': 'imageId'
-        }
+        self.attribute_map = {"image_id": "imageId"}
 
         self._image_id = image_id
 
     @classmethod
-    def from_dict(cls, dikt) -> 'InlineResponse200':
+    def from_dict(cls, dikt) -> "InlineResponse200":
         """Returns the dict as a model
 
         :param dikt: A dict.
