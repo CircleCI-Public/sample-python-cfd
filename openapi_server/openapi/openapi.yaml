@@ -5,10 +5,8 @@ info:
   title: ZoomFoodToo
   version: 1.0.0
 servers:
-- description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/dsayling8/ZoomFoodToo/1.0.0
 - description: Local
-  url: http://localhost:8080/dsayling8/ZoomFoodToo/1.0.0
+  url: http://localhost:8080/ZoomFoodToo/1.0.0
 paths:
   /cart:
     get:
