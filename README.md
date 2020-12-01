@@ -12,9 +12,9 @@ In this sample workflow, we're simply installing our required python packages, w
 
 ## Getting Started
 
-You can see the CI pipeline for this application running [live on CircleCI](https://app.circleci.com/pipelines/github/dsayling/sample-flask?branch=main).
+You can see the CI workflow for this application running [live on CircleCI](https://app.circleci.com/pipelines/github/dsayling/sample-flask?branch=main).
 
-Here you can find the CircleCI configuration file, aka [config.yml](https://github.com/dsayling/sample-flask/blob/main/.circleci/config.yml).
+The definition of this workflow is contained in the CircleCI configuration file, aka [config.yml](https://github.com/dsayling/sample-flask/blob/main/.circleci/config.yml).
 
 ## Adapting to your workflow
 
@@ -65,8 +65,8 @@ pytest
 
 ## Additional Resources
 
-[CircleCI Docs](https://circleci.com/docs/) - The official CircleCI Documentation website.
-[CircleCI Configuration Reference](https://circleci.com/docs/2.0/configuration-reference/#section=configuration) - From CircleCI Docs, the configuration reference page is one of the most useful pages we have.
+* [CircleCI Docs](https://circleci.com/docs/) - The official CircleCI Documentation website.
+* [CircleCI Configuration Reference](https://circleci.com/docs/2.0/configuration-reference/#section=configuration) - From CircleCI Docs, the configuration reference page is one of the most useful pages we have.
 
 
 ## License
