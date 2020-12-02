@@ -18,10 +18,10 @@ REQUIRES = ["connexion>=2.0.2", "swagger-ui-bundle>=0.0.2", "python_dateutil>=2.
 setup(
     name=NAME,
     version=VERSION,
-    description="ZoomFoodToo",
+    description="Continous Food Delivery",
     author_email="",
     url="",
-    keywords=["OpenAPI", "ZoomFoodToo"],
+    keywords=["OpenAPI", "Continuous Food Delivery"],
     install_requires=REQUIRES,
     packages=find_packages(),
     package_data={"": ["openapi/openapi.yaml"]},

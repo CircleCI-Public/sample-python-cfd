@@ -2,11 +2,11 @@ openapi: 3.0.0
 info:
   license:
     name: MIT
-  title: ZoomFoodToo
+  title: Continous Food Delievery
   version: 1.0.0
 servers:
 - description: Local
-  url: http://localhost:8080/ZoomFoodToo/1.0.0
+  url: http://localhost:8080/CFD/1.0.0
 paths:
   /cart:
     get:

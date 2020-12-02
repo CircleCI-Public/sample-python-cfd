@@ -29,7 +29,7 @@ class TestImageController(BaseTestCase):
         }
         data = dict(fileName=(BytesIO(b"some file data"), "file.png"))
         response = self.client.open(
-            "/ZoomFoodToo/1.0.0/image",
+            "/CFD/1.0.0/image",
             method="POST",
             headers=headers,
             data=data,
@@ -55,7 +55,7 @@ class TestImageController(BaseTestCase):
             "Accept": "application/json",
         }
         response = self.client.open(
-            "/ZoomFoodToo/1.0.0/image/{image_id}".format(image_id=0),
+            "/CFD/1.0.0/image/{image_id}".format(image_id=0),
             method="DELETE",
             headers=headers,
         )
@@ -74,7 +74,7 @@ class TestImageController(BaseTestCase):
             "Accept": "image/png application/json",
         }
         response = self.client.open(
-            "/ZoomFoodToo/1.0.0/image/{image_id}".format(image_id=0),
+            "/CFD/1.0.0/image/{image_id}".format(image_id=0),
             method="GET",
             headers=headers,
         )
