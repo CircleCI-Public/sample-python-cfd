@@ -22,7 +22,7 @@ This sample application is a flask REST server written in python, and utilizes t
 
 When you start up the service, you can open [this page](http://localhost:8080/CFD/1.0.0/ui/) in your browser to view the available API endpoints.
 
-![Swagger UI Screenshot](https://github.com/CircleCI-Public/sample-python-cfd/blob/main/.github/img/preview.gif?raw=true)
+![Swagger UI Screenshot](https://raw.githubusercontent.com/CircleCI-Public/sample-python-cfd/main/.github/img/preview.png)
 
 ### Front-End
 
