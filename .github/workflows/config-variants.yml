@@ -1,0 +1,29 @@
+name: test-extended-configs
+
+on: [pull_request]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        configfile: ["heroku-deploy", "pylint"]
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Replace config
+      # we could also run a git apply from a diff file...
+      # assuming the git apply fails, we know that there's a 'merge' conflict between the config and variants
+      run: cp .circleci/extended/${{ matrix.configfile }}.yml .circleci/config.yml
+    - name: push-branch
+      uses: github-actions-x/commit@v2.7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: ${{ github.head_ref }}-${{ matrix.configfile }}
+        commit-message: 'Publish child branch from ${{ github.head_ref }} with ${{ matrix.configfile }} variant'
+        # rebase: true  # fails if you don't have an branch already pushed...
+        # these are required to commit
+        email: dsayling@gmail.com
+        name: Drew Ayling
