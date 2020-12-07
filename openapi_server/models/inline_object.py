@@ -21,7 +21,7 @@ class InlineObject(Model):
         :param file_name: The file_name of this InlineObject.  # noqa: E501
         :type file_name: file
         """
-        self.openapi_types = {"file_name": file}
+        self.openapi_types = {"file_name": file}  # pylint: disable=undefined-variable
 
         self.attribute_map = {"file_name": "fileName"}
 
