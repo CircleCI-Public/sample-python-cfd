@@ -14,6 +14,18 @@ In this sample config, we have a single workflow `build-and-test` which will ins
 
 If you would like to copy the [config.yml](https://github.com/CircleCI-public/sample-python-cfd/blob/main/.circleci/config.yml) and adapt it to your project, be sure to read the comments in the config file to ensure it works for your project. For more details, see the [CircleCI configuration reference](https://circleci.com/docs/2.0/configuration-reference/).
 
+## Addtional Sample Configuration Files
+
+Inside the `.circleci` directory, you will find an `extended` directory that extends the configuration beyond the default `.circleci/config.yml`. These configuration files are tested with every pull request to this sample app, so they stay up to date and verified working.
+
+### Heroku Deploy
+
+The `.circleci/extended/heroku-deploy.yml` configuration file extends the default config by adding a job to deploy to heroku via a git push. For more information on how to configure this for your own project, visit the [CircleCI docs](https://circleci.com/docs/2.0/deployment-integrations/#a-simple-example-using-heroku) for more details
+
+### Pylint
+
+The `.circleci/extended/pylint.yml` configuration file extends the default config by adding a step to sample job. The `.pylintrc` in the project directory is configured to fail the pipeline if any errors are present when linting.
+
 ## About This App
 
 This sample application is a flask REST server written in python, and utilizes the connexion framework which allows us build and run the service from an [OpenAPI/Swagger specification](https://swagger.io/specification/).
