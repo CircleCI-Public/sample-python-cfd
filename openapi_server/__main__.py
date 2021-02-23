@@ -11,7 +11,7 @@ app.add_api("openapi.yaml", arguments={"title": "CFD"}, pythonic_params=True)
 CORS(app.app)
 
 def main():
-    app.run(port=8080)
+    app.run(port=8000)
 
 
 if __name__ == "__main__":
