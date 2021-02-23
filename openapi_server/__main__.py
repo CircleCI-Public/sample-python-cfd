@@ -15,7 +15,7 @@ CORS(app.app)
 db = SQLAlchemy(app)
 
 def main():
-    app.run(port=8080)
+    app.run(port=8000)
 
 
 if __name__ == "__main__":

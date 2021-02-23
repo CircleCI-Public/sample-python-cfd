@@ -57,11 +57,7 @@ Python 3.5.2+ OR Docker
 To run the server on a Docker container, please execute the following from the root directory:
 
 ```bash
-# building the image
-docker build -t sample-flask .
-
-# starting up a container
-docker run -p 8080:8080 sample-flask
+docker-compose up --build
 ```
 
 If not using docker, to run the server, please execute the following from the root directory:

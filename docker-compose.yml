@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: gunicorn openapi_server.__main__:app
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env.dev
