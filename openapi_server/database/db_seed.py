@@ -1,14 +1,10 @@
 """
-In memory "database" using dictionaries - this could be mapped to or extended to other real dbs.
-
+Methods and objects to seed the db initially. Assumes tables have been created.
 """
 
 import os
 from openapi_server.models import MenuItem
 from openapi_server.database import models
-
-# Technically python should load a cached module and should only run once.
-# In the off change we need to make this a singleton pattern we can just use a dictionary
 
 IMAGES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
 
@@ -74,7 +70,6 @@ def _prepopulate_images():
 
 def _prepopulate_menu():
     for item in menu_start_raw:
-        print(item)
         menu_item = MenuItem.from_dict(item)  # noqa: E501
         models.MenuItem.add(menu_item)
 
