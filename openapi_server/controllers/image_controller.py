@@ -1,17 +1,9 @@
-import os
-import itertools
-
 import connexion
-import six
 
 from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.inline_response200 import InlineResponse200  # noqa: E501
-from openapi_server import util
-from openapi_server.database import IMAGES_PATH, IMAGES
-
-counter = itertools.count(
-    len(IMAGES.keys())
-)  # this should be the next key if they're integers
+from openapi_server.database import models
+from sqlalchemy.exc import SQLAlchemyError
 
 
 def add_image():  # noqa: E501
@@ -25,12 +17,14 @@ def add_image():  # noqa: E501
     :rtype: InlineResponse200
     """
     uploaded_file = connexion.request.files["fileName"]
-    image_id = next(counter)
-    file_path = os.path.join(IMAGES_PATH, str(image_id))
     # save the file to the path and then save the path to the 'db'
-    uploaded_file.save(file_path)
-    IMAGES.update({int(image_id): file_path})
-    return InlineResponse200(image_id=image_id)
+
+    try:
+        image = models.Image.add(uploaded_file.read())
+        return InlineResponse200(image_id=image.id)
+    except (SQLAlchemyError, TypeError):
+        models.db.session.rollback()
+        return Error(400), 400
 
 
 def delete_image(image_id):  # noqa: E501
@@ -43,10 +37,14 @@ def delete_image(image_id):  # noqa: E501
 
     :rtype: None
     """
-    if image_id not in IMAGES:
+    if not (image := models.Image.query.filter(models.Image.id == image_id).first()):
         return Error(404, "image not found")
-    os.remove(IMAGES.get(int(image_id)))
-    del IMAGES[int(image_id)]
+    try:
+        models.db.session.delete(image)
+        models.db.session.commit()
+    except (SQLAlchemyError, TypeError):
+        models.db.session.rollback()
+        return Error(400), 400
 
 
 def get_image(image_id):  # noqa: E501
@@ -59,8 +57,6 @@ def get_image(image_id):  # noqa: E501
 
     :rtype: file
     """
-    if image_id not in IMAGES:
-        return Error(404, "image not found")
-    with open(IMAGES.get(int(image_id)), "rb") as f:
-        data = f.read()
-    return data
+    if not (image := models.Image.query.filter(models.Image.id == image_id).first()):
+        return Error(404, "image not found"), 404
+    return image.data

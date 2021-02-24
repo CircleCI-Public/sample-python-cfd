@@ -5,3 +5,4 @@ python_dateutil >= 2.6.0
 setuptools >= 21.0.0
 gunicorn == 20.0.4
 flask-sqlalchemy == 2.4.4
+# psycopg2-binary
