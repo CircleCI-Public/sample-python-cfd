@@ -7,7 +7,6 @@ from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
 from openapi_server import util
 
-from openapi_server.database import CART
 from openapi_server.database import models
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
