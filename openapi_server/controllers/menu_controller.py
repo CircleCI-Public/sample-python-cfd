@@ -37,7 +37,7 @@ def list_menu(limit=None):  # noqa: E501
     :rtype: List[MenuItem]
     """
     # todo setup limit by using paginate
-    values = [_.serialize() for _ in models.MenuItem.query.all()]
+    values = [_.serialize() for _ in models.MenuItem.query_all() if _]
     return values
 
 
@@ -51,4 +51,7 @@ def show_menu_item_by_id(item_id):  # noqa: E501
 
     :rtype: MenuItem
     """
-    return models.MenuItem.query.filter(models.MenuItem.id == int(item_id)).all()[0].serialize()
+    if (item := models.MenuItem.query_by_id(int(item_id))):
+        return item.serialize()
+    else:
+        return Error(400), 400

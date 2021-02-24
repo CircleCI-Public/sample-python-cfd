@@ -43,16 +43,10 @@ def delete_cart_item(item_id):  # noqa: E501
     :rtype: None
     """
     # this is by no means efficient
-    cart = models.Cart.query.filter(models.Cart.host == connexion.request.remote_addr).first()
-    for item in cart.items:
-        if item.id == item_id:
-            try:
-                cart.items.remove(item)
-                models.db.session.commit()
-            except (SQLAlchemyError, TypeError):
-                models.db.session.rollback()
-            break
-    else:
+    try:
+        models.Cart.delete_item_by_id(item_id)
+    except (SQLAlchemyError, TypeError):
+        models.db.session.rollback()
         return Error(403), 403  # cart is already devoid of this item
 
 
@@ -66,5 +60,5 @@ def list_cart(limit=None):  # noqa: E501
 
     :rtype: List[MenuItem]
     """
-    cart = models.Cart.query.filter(models.Cart.host == connexion.request.remote_addr).first()
+    cart = models.Cart.query_by_host(connexion.request.remote_addr)
     return [_.serialize() for _ in cart.items]

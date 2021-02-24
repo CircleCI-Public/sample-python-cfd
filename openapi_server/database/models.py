@@ -1,6 +1,7 @@
 from sqlalchemy.dialects import postgresql
 from flask_sqlalchemy import SQLAlchemy
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
+from sqlalchemy.exc import DataError
 
 
 db = SQLAlchemy()
@@ -49,6 +50,15 @@ class MenuItem(db.Model):
         _commit_item(item)
         return item.serialize()
 
+    @classmethod
+    def query_all(cls):
+        return cls.query.all()
+
+    @classmethod
+    def query_by_id(cls, item_id):
+        return cls.query.filter(MenuItem.id == item_id).first()
+
+
 class Cart(db.Model):
     host = db.Column(postgresql.INET, primary_key=True)
     items = db.relationship('MenuItem')
@@ -68,6 +78,19 @@ class Cart(db.Model):
         db_item.cart_id = host
         db.session.commit()
 
+    @classmethod
+    def query_by_host(cls, host):
+        return cls.query.filter(Cart.host == host).first()
+
+    @classmethod
+    def delete_item_by_id(cls, host, item_id):
+        cart = cls.query_by_host(host)
+        for item in cart.items:
+            if item.id == item_id:
+                cart.items.remove(item)
+                break
+            db.session.commit()
+
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.LargeBinary)
@@ -84,3 +107,15 @@ class Image(db.Model):
         image = cls(raw_data)
         _commit_item(image)
         return image
+
+    @classmethod
+    def delete_image(cls, image_id):
+        if not (image := cls.get_image(image_id)):
+            raise DataError
+        db.session.delete(image)
+        db.session.commit()
+
+    @classmethod
+    def get_image(cls, image_id):
+        return cls.query.filter(Image.id == image_id).first()
+

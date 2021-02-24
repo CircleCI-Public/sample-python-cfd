@@ -37,11 +37,8 @@ def delete_image(image_id):  # noqa: E501
 
     :rtype: None
     """
-    if not (image := models.Image.query.filter(models.Image.id == image_id).first()):
-        return Error(404, "image not found")
     try:
-        models.db.session.delete(image)
-        models.db.session.commit()
+        models.Image.delete_image(image_id)
     except (SQLAlchemyError, TypeError):
         models.db.session.rollback()
         return Error(400), 400
@@ -57,6 +54,6 @@ def get_image(image_id):  # noqa: E501
 
     :rtype: file
     """
-    if not (image := models.Image.query.filter(models.Image.id == image_id).first()):
+    if not (image := models.Image.get_image(image_id)):
         return Error(404, "image not found"), 404
     return image.data
