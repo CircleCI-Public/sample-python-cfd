@@ -4,7 +4,7 @@
 
 ## Description
 
-The sample python flask app here is designed to demonstrate a typical python CI workflow may look on CircleCI.
+The sample python flask app here is designed to demonstrate what a typical python CI workflow may look on CircleCI.
 
 You can see the CI pipelines for this application running [live on CircleCI](https://app.circleci.com/pipelines/github/CircleCI-Public/sample-python-cfd?branch=main).
 
