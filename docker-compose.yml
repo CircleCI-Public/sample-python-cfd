@@ -8,3 +8,11 @@ services:
       - 8080:8080
     env_file:
       - ./.env.dev
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.db
+volumes:
+  postgres_data:
