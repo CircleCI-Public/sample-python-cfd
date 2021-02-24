@@ -17,7 +17,9 @@ class TestMenuController(BaseTestCase):
     """MenuController integration test stubs"""
 
     def setUp(self):
-        self.sample_model = models.MenuItem(description="description", price=6.02, image_id=5, name='name')
+        self.sample_model = models.MenuItem(
+            description="description", price=6.02, image_id=5, name="name"
+        )
         self.sample_item = {
             "price": 6.02,
             "imageId": 5,
@@ -26,7 +28,7 @@ class TestMenuController(BaseTestCase):
             "id": 13,
         }
 
-    @mock.patch.object(models.MenuItem, 'add')
+    @mock.patch.object(models.MenuItem, "add")
     def test_add_menu_item(self, mock_item_add):
         """Test case for add_menu_item
 
@@ -48,7 +50,7 @@ class TestMenuController(BaseTestCase):
             response, 200, "Response body is : " + response.data.decode("utf-8")
         )
 
-    @mock.patch.object(models.MenuItem, 'query_all')
+    @mock.patch.object(models.MenuItem, "query_all")
     def test_list_menu(self, mock_query_menu):
         """Test case for list_menu
 
@@ -66,8 +68,7 @@ class TestMenuController(BaseTestCase):
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
-
-    @mock.patch.object(models.MenuItem, 'query_by_id')
+    @mock.patch.object(models.MenuItem, "query_by_id")
     def test_show_menu_item_by_id(self, mock_query):
         """Test case for show_menu_item_by_id
 

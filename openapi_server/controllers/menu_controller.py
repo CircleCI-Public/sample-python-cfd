@@ -5,6 +5,7 @@ from openapi_server.models.menu_item import MenuItem  # noqa: E501
 from openapi_server.database import models
 from sqlalchemy.exc import SQLAlchemyError
 
+
 def add_menu_item():  # noqa: E501
     """Create a menu item
 
@@ -51,7 +52,7 @@ def show_menu_item_by_id(item_id):  # noqa: E501
 
     :rtype: MenuItem
     """
-    if (item := models.MenuItem.query_by_id(int(item_id))):
+    if (item := models.MenuItem.query_by_id(int(item_id))) :
         return item.serialize()
     else:
         return Error(400), 400

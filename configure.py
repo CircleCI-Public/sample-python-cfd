@@ -1,5 +1,6 @@
 from openapi_server.__main__ import models, app
 
+
 def create_db():
     app.app.app_context().push()
     models.db.drop_all()

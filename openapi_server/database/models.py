@@ -17,11 +17,16 @@ class MenuItem(db.Model):
     name = db.Column(db.String())
     price = db.Column(db.Float())
     # image_id = db.Column(db.Integer)   # this is probably broken
-    image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
-    cart_id = db.Column(db.String, db.ForeignKey('cart.host'), nullable=True)
+    image_id = db.Column(db.Integer, db.ForeignKey("image.id"))
+    cart_id = db.Column(db.String, db.ForeignKey("cart.host"), nullable=True)
 
     def __init__(
-        self, description, name, price, image_id, cart_id=None,
+        self,
+        description,
+        name,
+        price,
+        image_id,
+        cart_id=None,
     ):
         self.description = description
         self.name = name
@@ -30,7 +35,7 @@ class MenuItem(db.Model):
         self.cart_id = cart_id
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return "<id {}>".format(self.id)
 
     # something like marshmallow would be a good addition if we were planning to scale this, but
     # there's just one model
@@ -41,10 +46,13 @@ class MenuItem(db.Model):
             "imageId": self.image_id,
             "name": self.name,
             "price": self.price,
-                }
+        }
+
     @classmethod
     def add(cls, menu_item):
-        item = cls(menu_item.description, menu_item.name, menu_item.price, menu_item.image_id)
+        item = cls(
+            menu_item.description, menu_item.name, menu_item.price, menu_item.image_id
+        )
         _commit_item(item)
         return item.serialize()
 
@@ -59,13 +67,13 @@ class MenuItem(db.Model):
 
 class Cart(db.Model):
     host = db.Column(db.String, primary_key=True)
-    items = db.relationship('MenuItem')
+    items = db.relationship("MenuItem")
 
     def __init__(self, host):
         self.host = host
 
     def __repr__(self):
-        return '<host {}>'.format(self.host)
+        return "<host {}>".format(self.host)
 
     @classmethod
     def add_item(cls, host, menu_item):
@@ -89,16 +97,16 @@ class Cart(db.Model):
                 break
             db.session.commit()
 
+
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.LargeBinary)
-
 
     def __init__(self, data):
         self.data = data
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return "<id {}>".format(self.id)
 
     @classmethod
     def add(cls, raw_data):
@@ -116,4 +124,3 @@ class Image(db.Model):
     @classmethod
     def get_image(cls, image_id):
         return cls.query.filter(Image.id == image_id).first()
-

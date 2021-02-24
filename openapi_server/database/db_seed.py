@@ -14,7 +14,7 @@ IMAGES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
 
 menu_start_raw = [
     {
-        "description": "Sample water bottle",
+        "description": "Fresh from the tap",
         "id": 0,
         "imageId": "water",
         "name": "Water",
@@ -57,18 +57,19 @@ menu_start_raw = [
     },
 ]
 
+
 def _prepopulate_images():
     for f in os.listdir(IMAGES_PATH):
         if f.endswith(".jpg"):
             name = f.split(".")[0]
             ipath = os.path.join(IMAGES_PATH, f)
-            with open(ipath, 'rb') as f2:
+            with open(ipath, "rb") as f2:
                 raw = f2.read()
             image = models.Image.add(raw)
             # super inefficient
             for mi in menu_start_raw:
-                if mi.get('imageId') == name :
-                    mi.update({'imageId': image.id})
+                if mi.get("imageId") == name:
+                    mi.update({"imageId": image.id})
 
 
 def _prepopulate_menu():

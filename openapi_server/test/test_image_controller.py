@@ -25,7 +25,7 @@ class TestImageController(BaseTestCase):
         self.mock_model = models.Image(self.mock_data)
 
     # @unittest.skip('reason')
-    @mock.patch.object(models.Image, 'add')
+    @mock.patch.object(models.Image, "add")
     def test_add_image(self, mock_add):
         """Test case for add_image
 
@@ -44,11 +44,9 @@ class TestImageController(BaseTestCase):
             data=data,
             content_type="multipart/form-data",
         )
-        self.assert200(
-            response, "Response body is : " + response.data.decode("utf-8")
-        )
+        self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
-    @mock.patch.object(models.Image, 'delete_image')
+    @mock.patch.object(models.Image, "delete_image")
     def test_delete_image(self, mock_delete):
         """Test case for delete_image
 
@@ -67,7 +65,7 @@ class TestImageController(BaseTestCase):
         )
         assert mock_delete.call_count == 1
 
-    @mock.patch.object(models.Image, 'get_image')
+    @mock.patch.object(models.Image, "get_image")
     def test_get_image(self, mock_get):
         """Test case for get_image
 

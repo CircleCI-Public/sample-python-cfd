@@ -17,10 +17,11 @@ from openapi_server.database import models
 class TestCartController(BaseTestCase):
     """CartController integration test stubs"""
 
-
     def setUp(self):
-        self.sample_model = models.MenuItem(description="description", price=6.02, image_id=5, name='name')
-        self.sample_cart = models.Cart('fake')
+        self.sample_model = models.MenuItem(
+            description="description", price=6.02, image_id=5, name="name"
+        )
+        self.sample_cart = models.Cart("fake")
         self.sample_cart.items = [self.sample_model]
         self.sample_item = {
             "price": 6.02,
@@ -30,7 +31,7 @@ class TestCartController(BaseTestCase):
             "id": 13,
         }
 
-    @mock.patch.object(models.Cart, 'add_item')
+    @mock.patch.object(models.Cart, "add_item")
     def test_add_cart_item(self, mock_add_item):
         """Test case for add_cart_item
 
@@ -58,7 +59,7 @@ class TestCartController(BaseTestCase):
             response, 204, "Response body is : " + response.data.decode("utf-8")
         )
 
-    @mock.patch.object(models.Cart, 'delete_item_by_id')
+    @mock.patch.object(models.Cart, "delete_item_by_id")
     def test_delete_cart_item(self, mock_delete):
         """Test case for delete_cart_item
 
@@ -72,9 +73,11 @@ class TestCartController(BaseTestCase):
             method="DELETE",
             headers=headers,
         )
-        self.assertStatus(response, 204, "Response body is : " + response.data.decode("utf-8"))
+        self.assertStatus(
+            response, 204, "Response body is : " + response.data.decode("utf-8")
+        )
 
-    @mock.patch.object(models.Cart, 'query_by_host')
+    @mock.patch.object(models.Cart, "query_by_host")
     def test_list_cart(self, mock_get_cart):
         """Test case for list_cart
 
