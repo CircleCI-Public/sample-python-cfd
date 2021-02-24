@@ -44,7 +44,7 @@ def delete_cart_item(item_id):  # noqa: E501
     """
     # this is by no means efficient
     try:
-        models.Cart.delete_item_by_id(item_id)
+        models.Cart.delete_item_by_id(connexion.request.remote_addr, item_id)
     except (SQLAlchemyError, TypeError):
         models.db.session.rollback()
         return Error(403), 403  # cart is already devoid of this item

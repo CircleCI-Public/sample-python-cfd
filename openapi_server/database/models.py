@@ -1,6 +1,5 @@
 from sqlalchemy.dialects import postgresql
 from flask_sqlalchemy import SQLAlchemy
-from openapi_server.models.menu_item import MenuItem  # noqa: E501
 from sqlalchemy.exc import DataError
 
 
