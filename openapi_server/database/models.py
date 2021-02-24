@@ -1,4 +1,3 @@
-from sqlalchemy.dialects import postgresql
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import DataError
 
@@ -19,7 +18,7 @@ class MenuItem(db.Model):
     price = db.Column(db.Float())
     # image_id = db.Column(db.Integer)   # this is probably broken
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
-    cart_id = db.Column(postgresql.INET, db.ForeignKey('cart.host'), nullable=True)
+    cart_id = db.Column(db.String, db.ForeignKey('cart.host'), nullable=True)
 
     def __init__(
         self, description, name, price, image_id, cart_id=None,
@@ -59,7 +58,7 @@ class MenuItem(db.Model):
 
 
 class Cart(db.Model):
-    host = db.Column(postgresql.INET, primary_key=True)
+    host = db.Column(db.String, primary_key=True)
     items = db.relationship('MenuItem')
 
     def __init__(self, host):

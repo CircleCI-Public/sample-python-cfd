@@ -60,5 +60,7 @@ def list_cart(limit=None):  # noqa: E501
 
     :rtype: List[MenuItem]
     """
-    cart = models.Cart.query_by_host(connexion.request.remote_addr)
-    return [_.serialize() for _ in cart.items]
+    if cart := models.Cart.query_by_host(connexion.request.remote_addr):
+        return [_.serialize() for _ in cart.items]
+    else:
+        return []
