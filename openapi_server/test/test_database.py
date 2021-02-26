@@ -11,21 +11,15 @@ from openapi_server import test
 
 from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
-from openapi_server.test import BaseTestCase
+from openapi_server.test import BaseTestCase, SKIP_DB_TESTS
 from openapi_server.database import models, db_seed
 from sqlalchemy.exc import SQLAlchemyError
-
-# can use this to forcibly skip the db tests
-SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", True)
 
 class TestDatabase(BaseTestCase):
     """MenuController integration test stubs"""
 
     def setUp(self):
-        # these will only run if the postgres database is attached
-        has_postgres = "postgres" in self.app.config.get("SQLALCHEMY_DATABASE_URI")
-        # converse logic is annoying, essentially we want to run the tests if the db is present, or if we say dont skip explicitly
-        if has_postgres or SKIP_DB_TESTS:
+        if SKIP_DB_TESTS:
                 pytest.skip()
         self.open_model = models.MenuItem(
             description="description", price=6.02, image_id=5, name="name"
