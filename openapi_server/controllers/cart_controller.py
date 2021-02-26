@@ -26,7 +26,7 @@ def add_cart_item():  # noqa: E501
         try:
             models.Cart.add_item(connexion.request.remote_addr, menu_item)
             # models.Cart.add_item(connexion.request.host.split(':')[0], menu_item)
-        except (SQLAlchemyError, TypeError):
+        except (SQLAlchemyError, TypeError, AttributeError):
             models.db.session.rollback()
             return Error(400), 400
 

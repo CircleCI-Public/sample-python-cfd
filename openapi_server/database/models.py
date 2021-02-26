@@ -54,7 +54,7 @@ class MenuItem(db.Model):
             menu_item.description, menu_item.name, menu_item.price, menu_item.image_id
         )
         _commit_item(item)
-        return item.serialize()
+        return item
 
     @classmethod
     def query_all(cls):

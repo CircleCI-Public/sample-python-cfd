@@ -19,7 +19,7 @@ def add_menu_item():  # noqa: E501
     if connexion.request.is_json:
         try:
             menu_item = MenuItem.from_dict(connexion.request.get_json())  # noqa: E501
-            return models.MenuItem.add(menu_item)
+            return models.MenuItem.add(menu_item).serialize()
         except (SQLAlchemyError, TypeError):
             models.db.session.rollback()
             return Error(400), 400

@@ -19,6 +19,7 @@ app.add_api("openapi.yaml", arguments={"title": "CFD"}, pythonic_params=True)
 CORS(app.app)
 models.db.init_app(app.app)
 
+# Seed the database if we're running with an in memory-db
 if "memory" in app.app.config.get("SQLALCHEMY_DATABASE_URI"):
     app.app.app_context().push()
     models.db.create_all()

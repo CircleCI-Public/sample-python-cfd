@@ -34,7 +34,7 @@ class TestMenuController(BaseTestCase):
 
         Create a menu item
         """
-        mock_item_add.return_value = self.sample_item
+        mock_item_add.return_value = self.sample_model
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
