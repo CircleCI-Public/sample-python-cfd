@@ -15,7 +15,7 @@ from openapi_server.database import models, db_seed
 from sqlalchemy.exc import SQLAlchemyError
 
 # can use this to forcibly skip the db tests
-SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", TRUE)
+SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", True)
 
 
 class TestDatabase(BaseTestCase):
