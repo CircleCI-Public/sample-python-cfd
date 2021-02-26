@@ -4,6 +4,7 @@ import unittest
 
 import pytest
 from flask import json
+import warnings
 from six import BytesIO
 from sqlalchemy import exc
 from openapi_server import test
@@ -15,7 +16,7 @@ from openapi_server.database import models, db_seed
 from sqlalchemy.exc import SQLAlchemyError
 
 # can use this to forcibly skip the db tests
-SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", True)
+SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", False)
 
 
 class TestDatabase(BaseTestCase):
@@ -25,7 +26,7 @@ class TestDatabase(BaseTestCase):
         # these will only run if the postgres database is attached
         if (
             not "postgres" in self.app.config.get("SQLALCHEMY_DATABASE_URI")
-            and SKIP_DB_TESTS
+            or SKIP_DB_TESTS
         ):
             pytest.skip()
         self.open_model = models.MenuItem(
