@@ -16,19 +16,17 @@ from openapi_server.database import models, db_seed
 from sqlalchemy.exc import SQLAlchemyError
 
 # can use this to forcibly skip the db tests
-SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", False)
-
+SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", True)
 
 class TestDatabase(BaseTestCase):
     """MenuController integration test stubs"""
 
     def setUp(self):
         # these will only run if the postgres database is attached
-        if (
-            not "postgres" in self.app.config.get("SQLALCHEMY_DATABASE_URI")
-            or SKIP_DB_TESTS
-        ):
-            pytest.skip()
+        no_postgres = "postgres" not in self.app.config.get("SQLALCHEMY_DATABASE_URI")
+        # converse logic is annoying, essentially we want to run the tests if the db is present, or if we say dont skip explicitly
+        if no_postgres and SKIP_DB_TESTS:
+                pytest.skip()
         self.open_model = models.MenuItem(
             description="description", price=6.02, image_id=5, name="name"
         )
