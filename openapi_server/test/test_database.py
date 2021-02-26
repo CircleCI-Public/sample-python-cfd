@@ -23,9 +23,9 @@ class TestDatabase(BaseTestCase):
 
     def setUp(self):
         # these will only run if the postgres database is attached
-        no_postgres = "postgres" not in self.app.config.get("SQLALCHEMY_DATABASE_URI")
+        has_postgres = "postgres" in self.app.config.get("SQLALCHEMY_DATABASE_URI")
         # converse logic is annoying, essentially we want to run the tests if the db is present, or if we say dont skip explicitly
-        if no_postgres and SKIP_DB_TESTS:
+        if has_postgres or SKIP_DB_TESTS:
                 pytest.skip()
         self.open_model = models.MenuItem(
             description="description", price=6.02, image_id=5, name="name"
