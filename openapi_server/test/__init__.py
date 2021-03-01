@@ -4,26 +4,13 @@ import logging
 import connexion
 import pytest
 from flask_testing import TestCase
+from openapi_server import database
 
 from openapi_server.encoder import JSONEncoder
 
 from openapi_server.database import models
 
-
-def get_env(envvar: str, default=None):
-    """Boolean envvars as strings suck, fix that"""
-    var = os.getenv(envvar)
-    if var and var.lower() in ("false", "0"):
-        var = False
-    elif var and var.lower() in ("true", "1"):
-        var = True
-    elif default:
-        var = default
-    return var
-
-
-SKIP_DB_TESTS = get_env("SKIP_DB_TESTS", True)
-
+DB_URI = os.getenv("DATABASE_URI", "")
 
 class BaseTestCase(TestCase):
     def create_app(self):
@@ -35,13 +22,12 @@ class BaseTestCase(TestCase):
         return app.app
 
 
-@pytest.mark.skipif(SKIP_DB_TESTS, reason="DB tests request skipping")
+@pytest.mark.skipif("postgres" not in DB_URI, reason="No postgres database envvar, DB tests will skip")
 class BaseDBTestCase(BaseTestCase):
     def create_app(self):
         app = super().create_app()
-        db_uri = os.getenv("DATABASE_URI", "")
-        if "postgres" in db_uri:
-            app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+        if "postgres" in DB_URI:
+            app.config["SQLALCHEMY_DATABASE_URI"] = DB_URI
             app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         else:
             raise RuntimeError(

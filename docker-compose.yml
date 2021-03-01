@@ -7,9 +7,7 @@ services:
       - 8080:8080
     env_file:
       - ./.env.dev
-    # toggle these behind a comment for testing with the database locally
     command: gunicorn openapi_server.__main__:app
-    # entrypoint: pytest
   db:
     image: postgres:12-alpine
     volumes:
