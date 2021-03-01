@@ -22,7 +22,7 @@ class TestDatabase(BaseTestCase):
         if SKIP_DB_TESTS:
                 pytest.skip()
         self.open_model = models.MenuItem(
-            description="description", price=6.02, image_id=5, name="name"
+            description="description", price=6.02, image_id=1, name="name"
         )
         self.im_data = b"some file data"
         self.im_stream = BytesIO(self.im_data)
@@ -33,6 +33,7 @@ class TestDatabase(BaseTestCase):
         """Test case for add_menu_item
         Create a menu item
         """
+        db_seed._prepopulate_images()
         m = models.MenuItem.add(self.open_model)
         assert m.id == 1
         assert m.name == "name"
@@ -76,7 +77,7 @@ class TestDatabase(BaseTestCase):
         assert test_item.cart_id == "1.1.1.1"
 
     def test_image_add_failure(self):
-        with pytest.raises(SQLAlchemyError):
+        with pytest.raises(TypeError):
             models.Image.add({"bad"})
 
     def test_get_image(self):

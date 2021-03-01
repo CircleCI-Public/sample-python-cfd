@@ -69,11 +69,17 @@ python3 -m openapi_server
 
 ### Tests
 
-To launch the integration tests, use pytest:
+To launch the unit tests, use pytest:
 
 ```
 pip3 install -r requirements.txt
 pytest
+```
+
+If you want to run tests using a live database, use the alternative compose file:
+
+```
+docker-compose -f docker-compose-test.yml up --build --exit-code-from web
 ```
 
 ## Additional Resources

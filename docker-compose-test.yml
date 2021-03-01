@@ -2,14 +2,14 @@ version: '3.9'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.test
     ports:
       - 8080:8080
     env_file:
       - ./.env.dev
-    # toggle these behind a comment for testing with the database locally
-    command: gunicorn openapi_server.__main__:app
-    # entrypoint: pytest
+    entrypoint: pytest
   db:
     image: postgres:12-alpine
     volumes:
