@@ -8,7 +8,18 @@ from openapi_server.encoder import JSONEncoder
 
 from openapi_server.database import models
 
-SKIP_DB_TESTS = os.getenv("SKIP_DB_TESTS", True)
+def get_env(envvar: str, default=None):
+    """Boolean envvars as strings suck, fix that"""
+    var = os.getenv(envvar).lower()
+    if var in ("false", "0"):
+        var = False
+    elif var in ("true", "1"):
+        var = True
+    elif default:
+        var = default
+    return var
+
+SKIP_DB_TESTS = get_env("SKIP_DB_TESTS", True)
 
 class BaseTestCase(TestCase):
     def create_app(self):
