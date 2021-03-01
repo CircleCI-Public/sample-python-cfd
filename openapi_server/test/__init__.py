@@ -17,10 +17,12 @@ class BaseTestCase(TestCase):
         app.app.json_encoder = JSONEncoder
         app.add_api("openapi.yaml", pythonic_params=True)
         if not SKIP_DB_TESTS:
-            app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-                "DATABASE_URL"
-            )
-            app.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+            db_uri = os.getenv('DATABASE_URI')
+            if "postgres" in db_uri:
+                app.app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+                app.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+            else:
+                raise RuntimeError("Request to run db tests, but postgresql db not connected")
             models.db.init_app(app.app)
         return app.app
 

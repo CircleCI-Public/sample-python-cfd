@@ -21,7 +21,7 @@ jobs:
         environment:
           SKIP_DB_TESTS: False  # this is used to make sure our db tests run even if the db connection fails
           # This URL is configured from the environment variables set below
-          SQLALCHEMY_DATABASE_URI: postgresql://root:password@localhost/circle_test?sslmode=disable
+          DATABASE_URI: postgresql://root:password@localhost/circle_test?sslmode=disable
       - image: circleci/postgres:13.2 # an example of how to specify a service container
         environment:
           POSTGRES_USER: root
