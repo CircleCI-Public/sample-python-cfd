@@ -11,23 +11,21 @@ from openapi_server import test
 
 from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
-from openapi_server.test import BaseTestCase, SKIP_DB_TESTS
+from openapi_server.test import BaseDBTestCase, SKIP_DB_TESTS
 from openapi_server.database import models, db_seed
 from sqlalchemy.exc import SQLAlchemyError
 
-class TestDatabase(BaseTestCase):
+class TestDatabase(BaseDBTestCase):
     """MenuController integration test stubs"""
 
     def setUp(self):
-        if SKIP_DB_TESTS:
-                pytest.skip()
+        super().setUp()
         self.open_model = models.MenuItem(
             description="description", price=6.02, image_id=1, name="name"
         )
         self.im_data = b"some file data"
         self.im_stream = BytesIO(self.im_data)
         self.im_model = models.Image(self.im_data)
-        super().setUp()
 
     def test_add_menu_item_success(self):
         """Test case for add_menu_item
