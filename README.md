@@ -57,11 +57,7 @@ Python 3.5.2+ OR Docker
 To run the server on a Docker container, please execute the following from the root directory:
 
 ```bash
-# building the image
-docker build -t sample-flask .
-
-# starting up a container
-docker run -p 8080:8080 sample-flask
+docker-compose up --build
 ```
 
 If not using docker, to run the server, please execute the following from the root directory:
@@ -73,11 +69,17 @@ python3 -m openapi_server
 
 ### Tests
 
-To launch the integration tests, use pytest:
+To launch the unit tests, use pytest:
 
 ```
 pip3 install -r requirements.txt
 pytest
+```
+
+If you want to run tests using a live database, use the alternative compose file:
+
+```
+docker-compose -f docker-compose-test.yml up --build --exit-code-from web
 ```
 
 ## Additional Resources

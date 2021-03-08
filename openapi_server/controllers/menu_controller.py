@@ -1,10 +1,9 @@
 import connexion
-import six
 
 from openapi_server.models.error import Error  # noqa: E501
 from openapi_server.models.menu_item import MenuItem  # noqa: E501
-from openapi_server import util
-from openapi_server.database import MENU
+from openapi_server.database import models
+from sqlalchemy.exc import SQLAlchemyError
 
 
 def add_menu_item():  # noqa: E501
@@ -18,11 +17,14 @@ def add_menu_item():  # noqa: E501
     :rtype: None
     """
     if connexion.request.is_json:
-        menu_item = MenuItem.from_dict(connexion.request.get_json())  # noqa: E501
-    if MENU.get(int(menu_item.id)):
-        return Error(400)
+        try:
+            menu_item = MenuItem.from_dict(connexion.request.get_json())  # noqa: E501
+            return models.MenuItem.add(menu_item).serialize()
+        except (SQLAlchemyError, TypeError):
+            models.db.session.rollback()
+            return Error(400), 400
     else:
-        MENU.update({int(menu_item.id): menu_item})
+        return Error(400), 400
 
 
 def list_menu(limit=None):  # noqa: E501
@@ -35,7 +37,8 @@ def list_menu(limit=None):  # noqa: E501
 
     :rtype: List[MenuItem]
     """
-    values = list(MENU.values())[:limit] if limit else list(MENU.values())[:100]
+    # todo setup limit by using paginate
+    values = [_.serialize() for _ in models.MenuItem.query_all() if _]
     return values
 
 
@@ -49,4 +52,7 @@ def show_menu_item_by_id(item_id):  # noqa: E501
 
     :rtype: MenuItem
     """
-    return MENU.get(int(item_id))
+    if (item := models.MenuItem.query_by_id(int(item_id))) :
+        return item.serialize()
+    else:
+        return Error(400), 400

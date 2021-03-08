@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env.dev
+    command: gunicorn openapi_server.__main__:app
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.db
+volumes:
+  postgres_data:

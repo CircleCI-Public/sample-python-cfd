@@ -5,7 +5,9 @@ WORKDIR /usr/src/app
 
 RUN apt-get update && apt-get install -y netcat
 
-COPY run-requirements.txt /usr/src/app/requirements.txt
+COPY requirements.txt /usr/src/app/requirements.txt
+COPY run-requirements.txt /usr/src/app/run-requirements.txt
+# COPY run-requirements.txt /usr/src/app/requirements.txt
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
