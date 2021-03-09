@@ -10,10 +10,9 @@ from openapi_server.database import db_seed
 
 app = connexion.App(__name__, specification_dir="./openapi/")
 app.app.json_encoder = encoder.JSONEncoder
-# app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "postgresql:///test-cfd")
 app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
     "DATABASE_URL", "sqlite:///:memory:"
-)  # can this work if there's no db to connect to?
+)  # connects to an in-memory db if no db url is available
 app.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.add_api("openapi.yaml", arguments={"title": "CFD"}, pythonic_params=True)
 CORS(app.app)

@@ -18,4 +18,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     create_db()
     if args.seed:
-        db_seed()
+        db_seed.seed()
