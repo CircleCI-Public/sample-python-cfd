@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import DataError
+from sqlalchemy.orm import backref
 
 
 db = SQLAlchemy()
@@ -10,15 +11,18 @@ def _commit_item(item):
     db.session.commit()
 
 
+association_table = db.Table('association', db.Model.metadata,
+    db.Column('left_id', db.Integer, db.ForeignKey('left.id')),
+    db.Column('right_id', db.String, db.ForeignKey('right.host'))
+)
 class MenuItem(db.Model):
     # definitely messes this up, the id should not be specified in the request
+    __tablename__ = 'left'
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String())
     name = db.Column(db.String())
     price = db.Column(db.Float())
-    # image_id = db.Column(db.Integer)   # this is probably broken
     image_id = db.Column(db.Integer, db.ForeignKey("image.id"))
-    cart_id = db.Column(db.String, db.ForeignKey("cart.host"), nullable=True)
 
     def __init__(
         self,
@@ -26,13 +30,11 @@ class MenuItem(db.Model):
         name,
         price,
         image_id,
-        cart_id=None,
     ):
         self.description = description
         self.name = name
         self.price = price
         self.image_id = image_id  # this should probably be anohter reference to a model
-        self.cart_id = cart_id
 
     def __repr__(self):
         return "<id {}>".format(self.id)
@@ -66,8 +68,12 @@ class MenuItem(db.Model):
 
 
 class Cart(db.Model):
+    __tablename__ = 'right'
     host = db.Column(db.String, primary_key=True)
-    items = db.relationship("MenuItem")
+    items = db.relationship("MenuItem",
+                            secondary=association_table,
+                            backref="carts"
+                            )
 
     def __init__(self, host):
         self.host = host
@@ -77,11 +83,12 @@ class Cart(db.Model):
 
     @classmethod
     def add_item(cls, host, menu_item):
-        if len(Cart.query.filter(Cart.host == host).all()) < 1:
-            new_cart = cls(host)
-            db.session.add(new_cart)
+        cart = Cart.query.filter(Cart.host == host).first()
+        if not cart:
+            cart = cls(host)
+            db.session.add(cart)
         db_item = MenuItem.query.filter(MenuItem.id == menu_item.id).first()
-        db_item.cart_id = host
+        cart.items.append(db_item)
         db.session.commit()
 
     @classmethod

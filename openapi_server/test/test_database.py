@@ -70,10 +70,10 @@ class TestDatabase(BaseDBTestCase):
         )  # this doesn't match the menu query... this is why we do TDD!
         db_seed.seed()
         test_item = models.MenuItem.query_by_id(1)
-        assert test_item.cart_id is None
+        assert test_item.carts == []
         models.Cart.add_item("1.1.1.1", test_item)
         assert len(models.Cart.query_by_host("1.1.1.1").items) == 1
-        assert test_item.cart_id == "1.1.1.1"
+        assert test_item.carts != []
 
     def test_image_add_failure(self):
         with pytest.raises(TypeError):

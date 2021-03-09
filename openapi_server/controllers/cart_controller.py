@@ -10,7 +10,7 @@ from openapi_server import util
 from openapi_server.database import models
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
-GLOBAL_CART_KEY = "GLOBAL"  # set this to empty to use IPs
+GLOBAL_CART_KEY = ""  # set this to empty to use IPs
 
 def add_cart_item():  # noqa: E501
     """Add a menu item a cart
