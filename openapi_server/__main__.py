@@ -11,6 +11,7 @@ from openapi_server.database import db_seed
 
 app = connexion.App(__name__, specification_dir="./openapi/")
 app.app.json_encoder = encoder.JSONEncoder
+logging.info("Looking for DATABASE_URL, if not found an in-memory db will be used")
 app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
     "DATABASE_URL", "sqlite:///:memory:"
 )  # connects to an in-memory db if no db url is available

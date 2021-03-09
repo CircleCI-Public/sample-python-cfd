@@ -10,6 +10,7 @@ from openapi_server import util
 from openapi_server.database import models
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
+GLOBAL_CART_KEY = "GLOBAL"  # set this to empty to use IPs
 
 def add_cart_item():  # noqa: E501
     """Add a menu item a cart
@@ -24,8 +25,7 @@ def add_cart_item():  # noqa: E501
     if connexion.request.is_json:
         menu_item = MenuItem.from_dict(connexion.request.get_json())  # noqa: E501
         try:
-            models.Cart.add_item(connexion.request.remote_addr, menu_item)
-            # models.Cart.add_item(connexion.request.host.split(':')[0], menu_item)
+            models.Cart.add_item(GLOBAL_CART_KEY or connexion.request.remote_addr, menu_item)
         except (SQLAlchemyError, TypeError, AttributeError):
             models.db.session.rollback()
             return Error(400), 400
@@ -43,7 +43,7 @@ def delete_cart_item(item_id):  # noqa: E501
     """
     # this is by no means efficient
     try:
-        models.Cart.delete_item_by_id(connexion.request.remote_addr, item_id)
+        models.Cart.delete_item_by_id(GLOBAL_CART_KEY or connexion.request.remote_addr, item_id)
     except (SQLAlchemyError, TypeError):
         models.db.session.rollback()
         return Error(403), 403  # cart is already devoid of this item
@@ -59,7 +59,7 @@ def list_cart(limit=None):  # noqa: E501
 
     :rtype: List[MenuItem]
     """
-    if cart := models.Cart.query_by_host(connexion.request.remote_addr):
+    if cart := models.Cart.query_by_host(GLOBAL_CART_KEY or connexion.request.remote_addr):
         return [_.serialize() for _ in cart.items]
     else:
         return []
