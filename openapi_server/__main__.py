@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 import os
 
 import connexion
@@ -20,6 +21,7 @@ models.db.init_app(app.app)
 
 # Seed the database if we're running with an in memory-db
 if "memory" in app.app.config.get("SQLALCHEMY_DATABASE_URI"):
+    logging.warning("In memory db being used, please ensure a postgres DATABASE_URL is set")
     app.app.app_context().push()
     models.db.create_all()
     db_seed.seed()
