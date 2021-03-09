@@ -82,6 +82,14 @@ If you want to run tests using a live database, use the alternative compose file
 docker-compose -f docker-compose-test.yml up --build --exit-code-from web
 ```
 
+### Heroku Deployment
+
+The database tables and seeding can be done with the `configure.py` file.
+
+If you need to configure the database on heroku again, be sure all the tables have been cleared. You can do so with, `heroku pg:reset -a sample-python-cfd`.
+Once reset, simply run, `heroku run python configure.py --seed -a sample-python-cfd` to create the tables and seed the db again. 
+
+
 ## Additional Resources
 
 * [CircleCI Docs](https://circleci.com/docs/) - The official CircleCI Documentation website.
