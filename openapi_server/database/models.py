@@ -95,7 +95,7 @@ class Cart(db.Model):
             if item.id == item_id:
                 cart.items.remove(item)
                 break
-            db.session.commit()
+        db.session.commit()
 
 
 class Image(db.Model):
