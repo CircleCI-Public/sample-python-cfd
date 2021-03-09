@@ -12,7 +12,7 @@ app = connexion.App(__name__, specification_dir="./openapi/")
 app.app.json_encoder = encoder.JSONEncoder
 # app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL", "postgresql:///test-cfd")
 app.app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-    "DATABASE_URI", "sqlite:///:memory:"
+    "DATABASE_URL", "sqlite:///:memory:"
 )  # can this work if there's no db to connect to?
 app.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.add_api("openapi.yaml", arguments={"title": "CFD"}, pythonic_params=True)

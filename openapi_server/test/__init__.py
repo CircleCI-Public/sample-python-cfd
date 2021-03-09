@@ -10,7 +10,7 @@ from openapi_server.encoder import JSONEncoder
 
 from openapi_server.database import models
 
-DB_URI = os.getenv("DATABASE_URI", "")
+DB_URI = os.getenv("DATABASE_URL", "")
 
 class BaseTestCase(TestCase):
     def create_app(self):
