@@ -16,7 +16,7 @@ jobs:
       - image: cimg/python:3.8
         environment:
           DATABASE_URI: postgresql://root:password@localhost/circle_test?sslmode=disable
-      - image: felicianotech/postgres:dev6
+      - image: felicianotech/postgres:dev7
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
