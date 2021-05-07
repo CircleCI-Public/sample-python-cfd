@@ -16,7 +16,7 @@ jobs:
       - image: cimg/python:3.8
         environment:
           DATABASE_URI: postgresql://root:password@localhost/circle_test?sslmode=disable
-      - image: circleci/postgres:13.1 # an example of how to specify a service container
+      - image: felicianotech/postgres:dev
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
