@@ -30,3 +30,6 @@ jobs:
       - run:
           name: Run tests
           command: pytest
+      - run: |
+          sudo apt-get update && sudo apt-get install -y net-tools
+          sudo netstat -plntu | grep "5432"
