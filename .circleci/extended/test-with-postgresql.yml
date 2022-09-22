@@ -5,7 +5,7 @@ orbs:
   # Orb commands and jobs help you with common scripting around a language/tool
   # so you dont have to copy and paste it everywhere.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
-  python: circleci/python@1.2
+  python: circleci/python@2.1.1
 
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
@@ -17,7 +17,7 @@ workflows:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.10.5
         environment:
           # This URL is configured from the environment variables set below
           DATABASE_URI: postgresql://root:password@localhost/circle_test?sslmode=disable
